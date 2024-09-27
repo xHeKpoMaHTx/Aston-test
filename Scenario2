@@ -1,6 +1,5 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 try:
     browser.get("https://sbis.ru/")
     contacts_link = browser.find_element(By.LINK_TEXT, "Контакты")
