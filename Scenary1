@@ -1,0 +1,37 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+Link = "https://sbis.ru/"
+browser = webdriver.Chrome()
+browser.get(Link)
+Contact_t = browser.find_element(By.XPATH, '//*[@id="container"]/div[2]/div[1]/div[3]/div[4]/ul/li[1]/a')
+Contact_t.click()
+Tenzor_b =  browser.find_element(By.XPATH, '//*[@id="contacts_clients"]/div[1]/div/div/div[2]/div/a/img')
+Tenzor_b.click()
+try:
+    block = browser.find_element(By.XPATH, '//div[contains(text(), "Сила в людях")]')
+    print("Блок 'Сила в людях' найден!")
+except Exception:
+    print("Блок 'Сила в людях' не найден.")
+Other_t = browser.find_element(By.XPATH, '//*[@id="container"]/div[1]/div/div[5]/div/div/div[1]/div/p[4]/a')
+Other_t.click()
+expected_url = "https://tenzor.ru/about"
+current_url = browser.current_url
+if current_url == expected_url:
+    print('Прочее в блоке "Сила в людях" открылось верно!')
+else:
+    print('Прочее в блоке "Сила в людях" открылось неверно!')
+images = browser.find_elements(By.XPATH, "//div[contains(@class, 'работаем')]//img")
+first_image_size = images[0].size
+width = first_image_size['width']
+height = first_image_size['height']
+all_sizes_match = True
+for img in images:
+    size = img.size
+    if size['width'] != width or size['height'] != height:
+        all_sizes_match = False
+        break
+if all_sizes_match:
+    print('В блоке "Работаем" одинаковая ширина и высота картинок')
+else:
+    print('В блоке "Работаем" разная ширина и высота картинок')
+browser.quit()
